@@ -12,7 +12,13 @@ connectDB();
 const app = express();
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 
 app.use("/api/projects", projectRoutes);
