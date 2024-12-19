@@ -18,7 +18,7 @@ app.use(
     credentials: true,
   })
 );
-app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
+app.use("/tmp", express.static(path.join(__dirname, "..", "tmp")));
 app.use(bodyParser.json());
 
 app.use("/api/projects", projectRoutes);
