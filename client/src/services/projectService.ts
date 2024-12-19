@@ -10,6 +10,7 @@ export const getProjects = async () => await axios.get(API_URL);
 export const addProject = async (data: FormData) =>
   await axios.post(`${API_URL}/add`, data, {
     headers: { "Content-Type": "multipart/form-data" },
+    withCredentials: true,
   });
 export const updateProjectScore = async (data: object, projectId: string) =>
   await axios.put(`${API_URL}/${projectId}/score`, data);
