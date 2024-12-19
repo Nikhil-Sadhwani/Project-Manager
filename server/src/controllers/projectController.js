@@ -3,7 +3,7 @@ const Project = require("../models/Project");
 exports.getProjects = async (req, res) => {
   try {
     const projects = await Project.find();
-    const baseUrl = `http://localhost:5000`;
+    const baseUrl = `https://project-manager-server-three.vercel.app`;
     const projectsWithImages = projects.map((project) => ({
       ...project.toObject(),
       image1: project.image1 ? `${baseUrl}/${project.image1}` : null,
