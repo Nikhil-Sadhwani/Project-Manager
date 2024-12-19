@@ -3,15 +3,25 @@ import { updateProjectScore } from "../services/projectService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+interface Project {
+  _id: string;
+  title: string;
+  description: string;
+  status: string;
+  candidate: string;
+  score: number;
+  image1?: string;
+  image2?: string;
+}
+
 const ProjectList = ({
   projects,
   refreshProjects,
 }: {
-  projects: any[];
+  projects: Project[];
   refreshProjects: () => void;
 }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
 
   const handleImageOpen = async (
     projectId: string,
@@ -20,7 +30,6 @@ const ProjectList = ({
   ) => {
     try {
       setSelectedImage(image);
-      setCurrentProjectId(projectId);
 
       setTimeout(async () => {
         const response = await updateProjectScore(
@@ -39,7 +48,6 @@ const ProjectList = ({
 
   const handleClosePopup = () => {
     setSelectedImage(null);
-    setCurrentProjectId(null);
   };
 
   return (
@@ -52,7 +60,7 @@ const ProjectList = ({
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {projects.map((project: any) => (
+          {projects.map((project) => (
             <div key={project._id} className="p-4 border rounded shadow">
               <h2 className="text-xl font-semibold">{project.title}</h2>
               <p>{project.description}</p>
@@ -64,7 +72,7 @@ const ProjectList = ({
                   <button
                     className="bg-blue-500 text-white px-4 py-2 rounded mb-2 mr-1"
                     onClick={() =>
-                      handleImageOpen(project._id, project.image1, "image1")
+                      handleImageOpen(project._id, project.image1!, "image1")
                     }
                   >
                     View Image 1
@@ -74,7 +82,7 @@ const ProjectList = ({
                   <button
                     className="bg-green-500 text-white px-4 py-2 rounded"
                     onClick={() =>
-                      handleImageOpen(project._id, project.image2, "image2")
+                      handleImageOpen(project._id, project.image2!, "image2")
                     }
                   >
                     View Image 2
