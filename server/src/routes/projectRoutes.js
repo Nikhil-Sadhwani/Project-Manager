@@ -6,7 +6,17 @@ const {
   updateScore,
 } = require("../controllers/projectController");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "/tmp");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({ storage });
 
 router.get("/", getProjects);
 router.post(
